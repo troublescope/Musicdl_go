@@ -13,13 +13,13 @@ import (
 func processInlineMusic(musicid int, query tgbotapi.InlineQuery, bot *tgbotapi.BotAPI) (err error) {
 	var songInfo SongInfo
 	db := MusicDB.Session(&gorm.Session{})
-	err = db.Where("music_id = ?", musicid).First(&songInfo).Error // 查找是否有缓存数据
-	if err == nil {                                                // 从缓存数据回应 inlineQuery
+	err = db.Where("music_id = ?", musicid).First(&songInfo).Error // Check if there is cached data
+	if err == nil {                                                // Respond to inlineQuery with cached data
 		if songInfo.FileID != "" && songInfo.SongName != "" {
 			var numericKeyboard tgbotapi.InlineKeyboardMarkup
 			numericKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 				tgbotapi.NewInlineKeyboardRow(
-					tgbotapi.NewInlineKeyboardButtonURL(fmt.Sprintf("%s- %s", songInfo.SongName, songInfo.SongArtists), fmt.Sprintf("https://music.163.com/song?id=%d", songInfo.MusicID)),
+					tgbotapi.NewInlineKeyboardButtonURL(fmt.Sprintf("%s - %s", songInfo.SongName, songInfo.SongArtists), fmt.Sprintf("https://music.163.com/song?id=%d", songInfo.MusicID)),
 				),
 				tgbotapi.NewInlineKeyboardRow(
 					tgbotapi.NewInlineKeyboardButtonSwitch(sendMeTo, fmt.Sprintf("https://music.163.com/song?id=%d", songInfo.MusicID)),
@@ -65,7 +65,7 @@ func processInlineMusic(musicid int, query tgbotapi.InlineQuery, bot *tgbotapi.B
 }
 
 func processEmptyInline(message tgbotapi.InlineQuery, bot *tgbotapi.BotAPI) (err error) {
-	inlineMsg := tgbotapi.NewInlineQueryResultArticle(message.ID, "输入 help 获取帮助", "Music163bot-Go v2")
+	inlineMsg := tgbotapi.NewInlineQueryResultArticle(message.ID, "Enter help to get assistance", "Music163bot-Go v2")
 	inlineConf := tgbotapi.InlineConfig{
 		InlineQueryID: message.ID,
 		IsPersonal:    false,
@@ -81,8 +81,8 @@ func processEmptyInline(message tgbotapi.InlineQuery, bot *tgbotapi.BotAPI) (err
 
 func processInlineHelp(message tgbotapi.InlineQuery, bot *tgbotapi.BotAPI) (err error) {
 	randomID := time.Now().UnixMicro()
-	inlineMsg1 := tgbotapi.NewInlineQueryResultArticle(fmt.Sprintf("%d", randomID), "1.粘贴音乐分享URL或输入MusicID", "Music163bot-Go v2")
-	inlineMsg2 := tgbotapi.NewInlineQueryResultArticle(fmt.Sprintf("%d", randomID+1), "2.输入 search+关键词 搜索歌曲", "Music163bot-Go v2")
+	inlineMsg1 := tgbotapi.NewInlineQueryResultArticle(fmt.Sprintf("%d", randomID), "1. Paste music sharing URL or enter MusicID", "Music163bot-Go v2")
+	inlineMsg2 := tgbotapi.NewInlineQueryResultArticle(fmt.Sprintf("%d", randomID+1), "2. Enter search+keyword to search for songs", "Music163bot-Go v2")
 	inlineConf := tgbotapi.InlineConfig{
 		InlineQueryID: message.ID,
 		IsPersonal:    false,
@@ -100,7 +100,7 @@ func processInlineSearch(message tgbotapi.InlineQuery, bot *tgbotapi.BotAPI) (er
 	randomID := time.Now().UnixMicro()
 	keyWord := strings.Replace(message.Query, "search", "", 1)
 	if keyWord == "" {
-		inlineMsg := tgbotapi.NewInlineQueryResultArticle(fmt.Sprintf("%d", randomID), "请输入关键词", "Music163bot-Go v2")
+		inlineMsg := tgbotapi.NewInlineQueryResultArticle(fmt.Sprintf("%d", randomID), "Please enter a keyword", "Music163bot-Go v2")
 		inlineConf := tgbotapi.InlineConfig{
 			InlineQueryID: message.ID,
 			IsPersonal:    false,

@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-// 限制查询速度及并发
+// Limit query speed and concurrency
 var statLimiter = make(chan bool, 1)
 
 func printAbout(message tgbotapi.Message, bot *tgbotapi.BotAPI) (err error) {

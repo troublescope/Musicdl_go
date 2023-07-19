@@ -21,10 +21,10 @@ func Start(conf map[string]string) (actionCode int) {
 			actionCode = 1
 		}
 	}()
-	// 创建缓存文件夹
+	// Create cache folder
 	dirExists(cacheDir)
 
-	// 解析 bot 管理员配置
+    // Parse bot administrator configuration
 	botAdminStr = strings.Split(config["BotAdmin"], ",")
 	if len(botAdminStr) == 0 && config["BotAdmin"] != "" {
 		botAdminStr = []string{config["BotAdmin"]}
@@ -38,7 +38,7 @@ func Start(conf map[string]string) (actionCode int) {
 		}
 	}
 
-	// 初始化数据库
+	// Initialize the database
 	err := initDB(config)
 	if err != nil {
 		logrus.Errorln(err)
@@ -66,13 +66,13 @@ func Start(conf map[string]string) (actionCode int) {
 		downloaderTimeout = 60
 	}
 
-	// 设置 bot 日志接口
+	// Set bot log interface
 	err = tgbotapi.SetLogger(logrus.StandardLogger())
 	if err != nil {
 		logrus.Errorln(err)
 		return 1
 	}
-	// 配置 token、api、debug
+	// deployment token, api, debug
 	bot, err = tgbotapi.NewBotAPIWithAPIEndpoint(config["BOT_TOKEN"], botAPI+"/bot%s/%s")
 	if err != nil {
 		logrus.Errorln(err)
@@ -82,10 +82,10 @@ func Start(conf map[string]string) (actionCode int) {
 		bot.Debug = true
 	}
 
-	logrus.Printf("%s 验证成功", bot.Self.UserName)
+	logrus.Printf("%s Verification successful", bot.Self.UserName)
 	botName = bot.Self.UserName
 
-	u := tgbotapi.NewUpdate(0)
+	u :Verification successful
 	u.Timeout = 60
 
 	updates := bot.GetUpdatesChan(u)

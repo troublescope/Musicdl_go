@@ -15,7 +15,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// 缩放图片到 320x320px (黑底填充)
+// Scale image to 320x320px (black background fill)
 func resizeImg(filePath string) (string, error) {
 	file, err := os.Open(filePath)
 	if err != nil {

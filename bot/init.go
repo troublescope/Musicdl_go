@@ -9,13 +9,13 @@ import (
 	"gorm.io/gorm"
 )
 
-// MusicDB 音乐缓存数据库入口
+// MusicDB Music cache database entry
 var MusicDB *gorm.DB
 
-// config 配置文件数据
+// config Configuration file data
 var config map[string]string
 
-// data 网易云 cookie
+// data NetEase Cloud cookie
 var data utils.RequestData
 
 var bot *tgbotapi.BotAPI
@@ -25,7 +25,7 @@ var botName string
 var cacheDir = "./cache"
 var botAPI = "https://api.telegram.org"
 
-// maxRetryTimes 最大重试次数, downloaderTimeout 下载超时时间
+// maxRetryTimes Maximum retry times, downloaderTimeout Download timeout
 var maxRetryTimes, downloaderTimeout int
 
 var (
@@ -53,53 +53,53 @@ var (
 	aboutText = `*Music163bot-Go v2*
 Github: https://github.com/XiaoMengXinX/Music163bot-Go
 
-\[编译环境] %s
-\[编译版本] %s
-\[编译哈希] %s
-\[编译日期] %s
-\[运行环境] %s`
-	musicInfo = `「%s」- %s
-专辑: %s
-#网易云音乐 #%s %.2fMB %.2fkbps
+\[Build Environment] %s
+\[Build Version] %s
+\[Build Hash] %s
+\[Build Date] %s
+\[Runtime Environment] %s`
+	musicInfo = `"%s" - %s
+Album: %s
+#NetEaseMusic #%s %.2fMB %.2fkbps
 via @%s`
 	musicInfoMsg = `%s
-专辑: %s
+Album: %s
 %s %.2fMB
 `
-	uploadFailed = `下载/发送失败
+	uploadFailed = `Download/Send failed
 %v`
-	statusInfo = `*\[统计信息\]*
-数据库中总缓存歌曲数量: %d
-当前对话 \[%s\] 缓存歌曲数量: %d
-当前用户 \[[%d](tg://user?id=%d)\] 缓存歌曲数量: %d
+	statusInfo = `*\[Statistics\]*
+Total cached songs in the database: %d
+Number of cached songs in the current session \[%s\]: %d
+Number of cached songs for the current user \[[%d](tg://user?id=%d)\]: %d
 `
-	rmcacheReport    = `清除 [%s] 缓存成功`
-	inputKeyword     = "请输入搜索关键词"
-	inputIDorKeyword = "请输入歌曲ID或歌曲关键词"
-	inputContent     = "请输入歌曲关键词/歌曲分享链接/歌曲ID"
-	searching        = `搜索中...`
-	noResults        = `未找到结果`
-	noCache          = `歌曲未缓存`
-	tapToDownload    = `点击上方按钮缓存歌曲`
-	tapMeToDown      = `点我缓存歌曲`
-	hitCache         = `命中缓存, 正在发送中...`
+	rmcacheReport    = `Clear [%s] cache successful`
+	inputKeyword     = "Please enter search keywords"
+	inputIDorKeyword = "Please enter the song ID or song keywords"
+	inputContent     = "Please enter song keywords/song sharing link/song ID"
+	searching        = `Searching...`
+	noResults        = `No results found`
+	noCache          = `Song not cached`
+	tapToDownload    = `Click the button above to cache the song`
+	tapMeToDown      = `Tap me to cache the song`
+	hitCache         = `Cache hit, sending...`
 	sendMeTo         = `Send me to...`
-	getLrcFailed     = `获取歌词失败, 歌曲可能不存在或为纯音乐`
-	getUrlFailed     = `获取歌曲下载链接失败`
-	fetchInfo        = `正在获取歌曲信息...`
-	fetchInfoFailed  = `获取歌曲信息失败`
-	waitForDown      = `等待下载中...`
-	downloading      = `下载中...`
+	getLrcFailed     = `Failed to get lyrics, the song may not exist or it's instrumental`
+	getUrlFailed     = `Failed to get song download link`
+	fetchInfo        = `Fetching song information...`
+	fetchInfoFailed  = `Failed to fetch song information`
+	waitForDown      = `Waiting for download...`
+	downloading      = `Downloading...`
 	downloadStatus   = " %s\n%.2fMB/%.2fMB %d%%"
-	redownloading    = `下载失败，尝试重新下载中...`
-	uploading        = `下载完成, 发送中...`
-	md5VerFailed     = "MD5校验失败"
-	reTrying         = "尝试重新下载中 (%d/%d)"
-	retryLater       = "请稍后重试"
+	redownloading    = `Download failed, retrying...`
+	uploading        = `Download complete, sending...`
+	md5VerFailed     = "MD5 verification failed"
+	reTrying         = "Retrying (%d/%d)"
+	retryLater       = "Please retry later"
 
-	reloading    = "重新加载中"
+	reloading    = "Reloading"
 	callbackText = "Success"
 
-	fetchingLyric   = "正在获取歌词中"
-	downloadTimeout = `下载超时`
+	fetchingLyric   = "Fetching lyrics"
+	downloadTimeout = `Download timeout`
 )

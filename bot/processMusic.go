@@ -19,7 +19,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// 限制并发任务数
+// Limit concurrent tasks
 var musicLimiter = make(chan bool, 4)
 
 func processMusic(musicID int, message tgbotapi.Message, bot *tgbotapi.BotAPI) (err error) {
@@ -29,7 +29,7 @@ func processMusic(musicID int, message tgbotapi.Message, bot *tgbotapi.BotAPI) (
 	if timeout != 0 {
 		d.SetTimeOut(time.Duration(int64(timeout)) * time.Second)
 	} else {
-		d.SetTimeOut(60 * time.Second) // 默认超时时间为 60 秒
+		d.SetTimeOut(60 * time.Second) // Default timeout is 60 seconds
 	}
 
 	defer func() {
@@ -169,7 +169,7 @@ func processMusic(musicID int, message tgbotapi.Message, bot *tgbotapi.BotAPI) (
 
 	songInfo.MusicID = musicID
 	songInfo.Duration = songDetail.Songs[0].Dt / 1000
-	songInfo.SongName = songDetail.Songs[0].Name // 解析歌曲信息
+	songInfo.SongName = songDetail.Songs[0].Name // Parse song information
 	songInfo.SongArtists = parseArtist(songDetail.Songs[0])
 	songInfo.SongAlbum = songDetail.Songs[0].Al.Name
 	url := songURL.Data[0].Url
@@ -329,7 +329,7 @@ func processMusic(musicID int, message tgbotapi.Message, bot *tgbotapi.BotAPI) (
 		songInfo.ThumbFileID = audio.Audio.Thumbnail.FileID
 	}
 
-	err = db.Create(&songInfo).Error // 写入歌曲缓存
+	err = db.Create(&songInfo).Error // Write song cache
 	if err != nil {
 		return err
 	}

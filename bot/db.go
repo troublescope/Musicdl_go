@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-// SongInfo 歌曲信息
+// Song information
 type SongInfo struct {
 	gorm.Model
 	MusicID      int

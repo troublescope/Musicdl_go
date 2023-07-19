@@ -16,7 +16,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// 判断数组包含关系
+// Check if a string is in an array
 func in(target string, strArray []string) bool {
 	sort.Strings(strArray)
 	index := sort.SearchStrings(strArray, target)
@@ -26,7 +26,7 @@ func in(target string, strArray []string) bool {
 	return false
 }
 
-// 解析作曲家信息
+// Parse composer information
 func parseArtist(songDetail types.SongDetailData) string {
 	var artists string
 	for i, ar := range songDetail.Ar {
@@ -39,7 +39,7 @@ func parseArtist(songDetail types.SongDetailData) string {
 	return artists
 }
 
-// 判断文件夹是否存在/新建文件夹
+// Check if a directory exists or create it
 func dirExists(path string) bool {
 	_, err := os.Stat(path)
 	if err == nil {
@@ -56,7 +56,7 @@ func dirExists(path string) bool {
 	return false
 }
 
-// 校验 md5
+// Verify MD5 checksum
 func verifyMD5(filePath string, md5str string) (bool, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
@@ -73,7 +73,7 @@ func verifyMD5(filePath string, md5str string) (bool, error) {
 	return true, nil
 }
 
-// 解析 MusicID
+// Parse MusicID from text
 func parseMusicID(text string) int {
 	var replacer = strings.NewReplacer("\n", "", " ", "")
 	messageText := replacer.Replace(text)
@@ -91,7 +91,7 @@ func parseMusicID(text string) int {
 	return musicid
 }
 
-// 解析 ProgramID
+// Parse ProgramID from text
 func parseProgramID(text string) int {
 	var replacer = strings.NewReplacer("\n", "", " ", "")
 	messageText := replacer.Replace(text)
@@ -99,7 +99,7 @@ func parseProgramID(text string) int {
 	return programid
 }
 
-// 提取数字
+// Extract integers from text
 func extractInt(text string) string {
 	matchArr := regInt.FindStringSubmatch(text)
 	if len(matchArr) == 0 {
@@ -108,7 +108,7 @@ func extractInt(text string) string {
 	return matchArr[0]
 }
 
-// 解析分享链接
+// Parse sharing link for MusicID
 func linkTestMusic(text string) string {
 	return extractInt(reg5.ReplaceAllString(reg4.ReplaceAllString(reg3.ReplaceAllString(reg2.ReplaceAllString(reg1.ReplaceAllString(text, ""), ""), ""), ""), ""))
 }
@@ -117,7 +117,7 @@ func linkTestProgram(text string) string {
 	return extractInt(reg5.ReplaceAllString(reg4.ReplaceAllString(reg3.ReplaceAllString(regP4.ReplaceAllString(regP3.ReplaceAllString(regP2.ReplaceAllString(regP1.ReplaceAllString(text, ""), ""), ""), ""), ""), ""), ""))
 }
 
-// 判断 error 是否为超时错误
+// Check if an error is a timeout error
 func isTimeout(err error) bool {
 	if strings.Contains(fmt.Sprintf("%v", err), "context deadline exceeded") {
 		return true
@@ -125,7 +125,7 @@ func isTimeout(err error) bool {
 	return false
 }
 
-// 获取电台节目的 MusicID
+// Get the MusicID for a radio program
 func getProgramRealID(programID int) int {
 	programDetail, err := api.GetProgramDetail(data, programID)
 	if err != nil {
